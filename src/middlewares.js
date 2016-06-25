@@ -84,6 +84,10 @@ function handleParseHeaders(req, res, next) {
         info.masterKey = req.body._MasterKey;
         delete req.body._MasterKey;
       }
+      if (req.body._ContentType) {
+        req.headers['content-type'] = req.body._ContentType;
+        delete req.body._ContentType;
+      }
     } else {
       return invalidRequest(req, res);
     }
@@ -198,7 +202,7 @@ var allowCrossDomain = function(req, res, next) {
 
   // intercept OPTIONS method
   if ('OPTIONS' == req.method) {
-    res.send(200);
+    res.sendStatus(200);
   }
   else {
     next();
